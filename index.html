@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>iPAS AI 應用規劃師初級 60 日學習筆記</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="學習筆記導覽">
+      <div class="brand">
+        <div class="brand-kicker">iPAS AI 應用規劃師 初級</div>
+        <h1>60 日學習筆記</h1>
+      </div>
+      <label class="search-label" for="searchInput">搜尋筆記</label>
+      <input id="searchInput" class="search" type="search" placeholder="例如 RAG、PoC、資料隱私">
+      <div class="filters" id="weekFilters" aria-label="週次篩選"></div>
+      <nav id="noteList" class="note-list" aria-label="每日筆記列表"></nav>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <button id="menuButton" class="icon-button" type="button" aria-label="開關導覽">☰</button>
+        <div>
+          <div class="topbar-kicker">Top-down 考試導向閱讀器</div>
+          <div id="currentTitle" class="current-title">請選擇一篇筆記</div>
+        </div>
+      </header>
+
+      <section class="reader-card">
+        <div class="reader-actions">
+          <button id="prevButton" class="nav-button" type="button">上一日</button>
+          <button id="copyLinkButton" class="nav-button" type="button">複製連結</button>
+          <button id="nextButton" class="nav-button" type="button">下一日</button>
+        </div>
+        <article id="noteContent" class="note-content"></article>
+      </section>
+    </main>
+  </div>
+
+  <script src="notes-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
