@@ -1,19 +1,28 @@
-# iPAS AI 應用規劃師：60 日概念導向學習筆記
+# iPAS AI 應用規劃師：60 日教材與 AI Agent 實作
 
-這個 repository 是可直接發布的靜態閱讀網站。
+這個 repository 是可直接部署的靜態網頁版教材。
 
-## 線上閱讀
+## 線上/本機使用
 
-根目錄的 `index.html`、`styles.css`、`app.js` 與 `notes-data.js` 是網站檔案。任何靜態網站平台，例如 Netlify 或 GitHub Pages，都可直接發布。
+直接開啟 `index.html` 即可閱讀，不需要後端、不需要安裝套件、不需要 API Key。
 
-## 教材來源
+主要功能：
 
-新版教材位於 [`v2-concept-course`](./v2-concept-course)：
+- 60 日教材：Day 1-30 初級，Day 31-60 中級。
+- 教材搜尋與週次篩選。
+- AI Agent 實作專區：免 API 的「iPAS 備考助教 Agent」模擬器。
+- Agent 步驟對照 iPAS 考點：目標輸入、任務拆解、知識檢索、答案生成、風險檢查、KPI 評估。
 
-- `01_30類核心教材.md`：60 日完整每日教材。Day 1-30 是初級，Day 31-60 是中級。
-- `02_60日概念導向計畫.md`：新版 60 日總表，標示每天的等級、科目與主題。
-- `generate_v3_course.mjs`：教材與網頁資料產生器。
+## 教材檔案
 
-## 更新網站內容
+- `index.html`：網站入口。
+- `styles.css`：版面樣式。
+- `app.js`：互動邏輯與 AI Agent 模擬。
+- `notes-data.js`：60 日教材資料。
+- `agent-course/`：AI Agent 文字教材。
 
-網站內容內嵌在 `notes-data.js`。修改教材後，需重新產生該檔案，網站才會顯示新版內容。
+## 部署
+
+可部署到 GitHub Pages、Netlify、Cloudflare Pages 或 Vercel Static Site。
+
+若未來升級為真 API 版，請勿把 API Key 放在前端，應改由後端或 serverless function 保管。
