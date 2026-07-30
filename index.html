@@ -11,12 +11,13 @@
     <aside class="sidebar" aria-label="教材導覽">
       <div class="brand">
         <div class="brand-kicker">iPAS AI 應用規劃師</div>
-        <h1>60 日教材與 AI Agent 實作</h1>
+        <h1>教材、Agent 與模擬考</h1>
       </div>
 
       <div class="mode-tabs" role="tablist" aria-label="閱讀模式">
         <button id="notesModeButton" class="mode-tab active" type="button">60 日教材</button>
         <button id="agentModeButton" class="mode-tab" type="button">AI Agent 實作</button>
+        <button id="examModeButton" class="mode-tab" type="button">模擬考</button>
       </div>
 
       <div id="notesControls">
@@ -29,6 +30,11 @@
       <div id="agentControls" class="agent-sidebar hidden">
         <p>用「iPAS 備考助教 Agent」實際看懂 Agent 的目標、規劃、檢索、生成、風險檢查與 KPI。</p>
         <button id="agentStartButton" class="wide-button" type="button">開始實作範例</button>
+      </div>
+
+      <div id="examControls" class="exam-sidebar hidden">
+        <p>初級、中級各三份，每份 50 題。作答後立即查看正確答案與四個選項解析。</p>
+        <div id="examSidebarList" class="exam-sidebar-list"></div>
       </div>
     </aside>
 
@@ -90,10 +96,67 @@
           <div id="examBridgeList" class="bridge-grid"></div>
         </section>
       </section>
+
+      <section id="examView" class="exam-lab hidden" aria-label="iPAS 模擬考">
+        <div id="examHome">
+          <div class="exam-intro">
+            <div>
+              <p class="eyebrow">共 6 份、300 題</p>
+              <h2>iPAS 模擬考題庫</h2>
+              <p>初級與中級各三份，每份 50 題。第一份練定義，第二份練類比，第三份練實務情境；每次點選答案後，立即顯示正解與逐項解析。</p>
+            </div>
+            <div class="exam-method" aria-label="作答方式">
+              <span><strong>1</strong> 選擇考卷</span>
+              <span><strong>2</strong> 點選答案</span>
+              <span><strong>3</strong> 讀完解析</span>
+            </div>
+          </div>
+          <div class="exam-level-heading">
+            <h3>初級模擬考</h3>
+            <span>人工智慧基礎概論、生成式 AI 應用與規劃</span>
+          </div>
+          <div id="beginnerExamList" class="exam-grid"></div>
+          <div class="exam-level-heading">
+            <h3>中級模擬考</h3>
+            <span>AI 技術、大數據處理、機器學習技術與應用</span>
+          </div>
+          <div id="intermediateExamList" class="exam-grid"></div>
+        </div>
+
+        <div id="examRunner" class="hidden">
+          <div class="exam-runner-header">
+            <button id="backToExamsButton" class="nav-button" type="button">返回考卷列表</button>
+            <div class="exam-scoreboard" aria-live="polite">
+              <span>已答 <strong id="answeredCount">0</strong>/50</span>
+              <span>答對 <strong id="correctCount">0</strong> 題</span>
+              <span>目前得分 <strong id="scorePercent">0</strong></span>
+            </div>
+          </div>
+          <div class="exam-progress" aria-hidden="true"><span id="examProgressBar"></span></div>
+
+          <article class="question-sheet">
+            <div class="question-meta">
+              <span id="questionNumber">第 1 題</span>
+              <span id="questionSubject" class="subject-tag"></span>
+            </div>
+            <h2 id="questionStem"></h2>
+            <div id="answerOptions" class="answer-options" role="group" aria-label="答案選項"></div>
+            <section id="answerFeedback" class="answer-feedback hidden" aria-live="polite"></section>
+          </article>
+
+          <div class="question-actions">
+            <button id="previousQuestionButton" class="nav-button" type="button">上一題</button>
+            <button id="nextQuestionButton" class="primary-button compact-button" type="button">下一題</button>
+          </div>
+          <div id="questionNavigator" class="question-navigator" aria-label="題號導覽"></div>
+        </div>
+      </section>
     </main>
   </div>
 
   <script src="notes-data.js"></script>
+  <script src="exam-data.js"></script>
   <script src="app.js"></script>
+  <script src="exam.js"></script>
 </body>
 </html>

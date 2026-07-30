@@ -1,7 +1,9 @@
 const notes = window.IPAS_NOTES || [];
 
 const state = {
-  mode: location.hash.startsWith('#agent') ? 'agent' : 'notes',
+  mode: location.hash.startsWith('#agent')
+    ? 'agent'
+    : (location.hash.startsWith('#exam') ? 'exam' : 'notes'),
   selectedDay: Number(location.hash.replace('#day-', '')) || 1,
   query: '',
   week: 'all',
@@ -18,10 +20,13 @@ const nextButton = $('nextButton');
 const copyLinkButton = $('copyLinkButton');
 const readerView = $('readerView');
 const agentView = $('agentView');
+const examView = $('examView');
 const notesControls = $('notesControls');
 const agentControls = $('agentControls');
+const examControls = $('examControls');
 const notesModeButton = $('notesModeButton');
 const agentModeButton = $('agentModeButton');
+const examModeButton = $('examModeButton');
 const agentQuestion = $('agentQuestion');
 const agentOutput = $('agentOutput');
 const examBridgeList = $('examBridgeList');
@@ -42,15 +47,25 @@ function weekLabel(week) {
 function setMode(mode) {
   state.mode = mode;
   const isAgent = mode === 'agent';
-  readerView.classList.toggle('hidden', isAgent);
+  const isExam = mode === 'exam';
+  const isNotes = mode === 'notes';
+  readerView.classList.toggle('hidden', !isNotes);
   agentView.classList.toggle('hidden', !isAgent);
-  notesControls.classList.toggle('hidden', isAgent);
+  examView.classList.toggle('hidden', !isExam);
+  notesControls.classList.toggle('hidden', !isNotes);
   agentControls.classList.toggle('hidden', !isAgent);
-  notesModeButton.classList.toggle('active', !isAgent);
+  examControls.classList.toggle('hidden', !isExam);
+  notesModeButton.classList.toggle('active', isNotes);
   agentModeButton.classList.toggle('active', isAgent);
-  titleEl.textContent = isAgent ? 'AI Agent 實作範例' : (notes.find((item) => item.day === state.selectedDay)?.title || '60 日教材');
+  examModeButton.classList.toggle('active', isExam);
+  const activeExamTitle = (window.IPAS_EXAMS || [])
+    .find((exam) => location.hash === `#exam-${exam.id}`)?.title;
+  titleEl.textContent = isAgent
+    ? 'AI Agent 實作範例'
+    : (isExam ? (activeExamTitle || 'iPAS 模擬考') : (notes.find((item) => item.day === state.selectedDay)?.title || '60 日教材'));
   if (isAgent && location.hash !== '#agent') location.hash = 'agent';
-  if (!isAgent) renderNote(state.selectedDay);
+  if (isExam && !location.hash.startsWith('#exam')) location.hash = 'exam';
+  if (isNotes) renderNote(state.selectedDay);
   document.body.classList.remove('sidebar-open');
 }
 
@@ -286,6 +301,7 @@ $('menuButton').addEventListener('click', () => {
 
 notesModeButton.addEventListener('click', () => setMode('notes'));
 agentModeButton.addEventListener('click', () => setMode('agent'));
+examModeButton.addEventListener('click', () => setMode('exam'));
 $('agentStartButton').addEventListener('click', () => setMode('agent'));
 $('runAgentButton').addEventListener('click', runAgent);
 
@@ -299,6 +315,10 @@ document.querySelectorAll('.prompt-chip').forEach((button) => {
 window.addEventListener('hashchange', () => {
   if (location.hash.startsWith('#agent')) {
     setMode('agent');
+    return;
+  }
+  if (location.hash.startsWith('#exam')) {
+    setMode('exam');
     return;
   }
   const day = Number(location.hash.replace('#day-', ''));
