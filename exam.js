@@ -261,6 +261,9 @@
   });
 
   renderExamLists();
+  window.addEventListener('hashchange', () => {
+    if (location.hash === '#exam') showExamHome();
+  });
   const hashExamId = location.hash.replace(/^#exam-/, '');
   if (location.hash.startsWith('#exam-') && exams.some((exam) => exam.id === hashExamId)) {
     startExam(hashExamId);

@@ -201,6 +201,21 @@ textarea:focus {
   margin-top: 4px;
 }
 
+.topbar > div { min-width: 0; }
+.exam-entry-link {
+  margin-left: auto;
+  flex: 0 0 auto;
+  padding: 10px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  color: var(--accent);
+  background: var(--panel);
+  text-decoration: none;
+  font-weight: 700;
+}
+.exam-entry-link:hover { background: var(--accent-soft); }
+.exam-entry-link:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
 .reader-card,
 .agent-lab,
 .exam-lab {
