@@ -40,8 +40,7 @@ const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
 }[char]));
 
 function weekLabel(week) {
-  if (week <= 5) return `初級第 ${week} 週`;
-  return `中級第 ${week - 5} 週`;
+  return ({ 1: '科目一 · Day 1–7', 2: '科目二 · Day 8–14', 3: '雙科整合 · Day 15' })[week] || '中級雙科';
 }
 
 function setMode(mode) {
@@ -62,7 +61,7 @@ function setMode(mode) {
     .find((exam) => location.hash === `#exam-${exam.id}`)?.title;
   titleEl.textContent = isAgent
     ? 'AI Agent 實作範例'
-    : (isExam ? (activeExamTitle || 'iPAS 模擬考') : (notes.find((item) => item.day === state.selectedDay)?.title || '60 日教材'));
+    : (isExam ? (activeExamTitle || 'iPAS 模擬考') : (notes.find((item) => item.day === state.selectedDay)?.title || '15 日中級雙科講義'));
   if (isAgent && location.hash !== '#agent') location.hash = 'agent';
   if (isExam && !location.hash.startsWith('#exam')) location.hash = 'exam';
   if (isNotes) renderNote(state.selectedDay);
@@ -322,7 +321,7 @@ window.addEventListener('hashchange', () => {
     return;
   }
   const day = Number(location.hash.replace('#day-', ''));
-  if (day && day !== state.selectedDay) {
+  if (day && (day !== state.selectedDay || state.mode !== 'notes')) {
     state.mode = 'notes';
     setMode('notes');
     renderNote(day);
